@@ -1,0 +1,56 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       String  @id @default(cuid())
+  username String  @unique @db.VarChar(20)
+  password String
+  name     String
+  token    String? // optional (login sekali - token lama akan dihapus dengan token baru)
+
+  Contacts Contact[]
+
+  @@map("users") // mengubah nama table di db (bukan di model Prisma)
+}
+
+model Contact {
+  id         String  @id @default(cuid())
+  first_name String
+  last_name  String?
+  email      String?
+  phone      String  @unique @db.VarChar(20)
+  username   String?
+
+  User   User?   @relation(fields: [userId], references: [id])
+  userId String?
+
+  Address   Address? @relation(fields: [addressId], references: [id])
+  addressId String?
+
+  @@map("contacts")
+}
+
+model Address {
+  id          String  @id @default(cuid())
+  street      String?
+  city        String
+  province    String?
+  country     String?
+  postal_code String?
+
+  Contact Contact[]
+
+  @@map("addresses")
+}

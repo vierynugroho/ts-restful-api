@@ -175,7 +175,7 @@ Response Body (success):
 ```json
 {
 	"status": true,
-	"message": "Addresss data retrieved successfully",
+	"message": "addresses data retrieved successfully",
 	"pagination": {
 		"current_page": 1,
 		"total_page": 10,
@@ -187,17 +187,19 @@ Response Body (success):
 	"data": [
 		{
 			"id": "string_id",
-			"first_name": "vnonymous",
-			"last_name": "password",
-			"email": "viery@example.com",
-			"phone": "6289123456"
+			"street": "Nusantara",
+			"city": "Blitar",
+			"province": "East Java",
+			"country": "Indonesia",
+			"postal_code": "66172"
 		},
 		{
 			"id": "string_id",
-			"first_name": "anonymous",
-			"last_name": "password",
-			"email": "nugroho@example.com",
-			"phone": "6289987654"
+			"street": "Sukorame",
+			"city": "Blitar",
+			"province": "East Java",
+			"country": "Indonesia",
+			"postal_code": "66171"
 		}
 	]
 }

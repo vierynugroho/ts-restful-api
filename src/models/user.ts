@@ -17,6 +17,12 @@ export type LoginUserRequest = {
 	password: string;
 };
 
+export type UpdateUserRequest = {
+	name?: string;
+	username?: string;
+	password?: string;
+};
+
 export type Data = {
 	username: string;
 	name: string;
@@ -26,7 +32,7 @@ export type Data = {
 export function toUserResponse(user: User): UserResponse {
 	return {
 		status: true,
-		message: 'register successfully',
+		message: 'successfully',
 		data: {
 			name: user.name,
 			username: user.username,

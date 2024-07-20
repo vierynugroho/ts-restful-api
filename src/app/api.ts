@@ -7,5 +7,5 @@ export const api = express();
 
 api.use(express.json());
 api.use('/api/v1', publicRouter);
-api.use('/api/v2', apiRouter);
+api.use('/api/v1', apiRouter);
 api.use(errorMiddleware);

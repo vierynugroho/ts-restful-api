@@ -30,7 +30,7 @@ model Contact {
   first_name String
   last_name  String?
   email      String?
-  phone      String  @unique @db.VarChar(20)
+  phone      String?
   username   String?
 
   User   User?   @relation(fields: [userId], references: [id])

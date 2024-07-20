@@ -16,8 +16,6 @@ describe('POST /api/v1/users', () => {
 			name: '',
 		});
 
-		logger.info(response.body);
-
 		expect(response.status).toBe(400);
 		expect(response.body).toBeDefined();
 	});
@@ -28,8 +26,6 @@ describe('POST /api/v1/users', () => {
 			password: 'password',
 			name: 'Test',
 		});
-
-		logger.info(response.body);
 
 		expect(response.status).toBe(200);
 		expect(response.body.data.username).toBe('test');
@@ -52,9 +48,6 @@ describe('POST /api/v1/users/login', () => {
 			password: 'password',
 		});
 
-		console.log(response.body.response);
-		logger.info(response.body);
-
 		expect(response.status).toBe(200);
 		expect(response.body.data.name).toBe('test');
 		expect(response.body.data.username).toBeDefined();
@@ -67,9 +60,6 @@ describe('POST /api/v1/users/login', () => {
 			password: 'password',
 		});
 
-		console.log(response.body);
-		logger.info(response.body);
-
 		expect(response.status).toBe(401);
 		expect(response.body.status).toBe(false);
 	});
@@ -80,16 +70,13 @@ describe('POST /api/v1/users/login', () => {
 			password: 'password',
 		});
 
-		console.log(response.body);
-		logger.info(response.body);
-
 		expect(response.status).toBe(400);
 		expect(response.body.status).toBe(false);
 		expect(response.body.message).toBeDefined();
 	});
 });
 
-describe('GET /api/v2/users/current', () => {
+describe('GET /api/v1/users/current', () => {
 	beforeEach(async () => {
 		await UserTest.create();
 	});
@@ -99,10 +86,7 @@ describe('GET /api/v2/users/current', () => {
 	});
 
 	it('should be able to get user', async () => {
-		const response = await supertest(api).get('/api/v2/users/current').set('X-API-TOKEN', 'test');
-
-		console.log(response.body);
-		logger.info(response.body);
+		const response = await supertest(api).get('/api/v1/users/current').set('X-API-TOKEN', 'test');
 
 		expect(response.status).toBe(200);
 		expect(response.body.data.name).toBe('test');
@@ -110,17 +94,14 @@ describe('GET /api/v2/users/current', () => {
 	});
 
 	it('should be reject get user if token is invalid', async () => {
-		const response = await supertest(api).get('/api/v2/users/current').set('X-API-TOKEN', 'invalid');
-
-		console.log(response.body);
-		logger.info(response.body);
+		const response = await supertest(api).get('/api/v1/users/current').set('X-API-TOKEN', 'invalid');
 
 		expect(response.status).toBe(401);
 		expect(response.body.status).toBe(false);
 	});
 });
 
-describe('PATCH /api/v2/users/current', () => {
+describe('PATCH /api/v1/users/current', () => {
 	beforeEach(async () => {
 		await UserTest.create();
 	});
@@ -130,26 +111,20 @@ describe('PATCH /api/v2/users/current', () => {
 	});
 
 	it('should be reject to update user if request is invalid', async () => {
-		const response = await supertest(api).patch('/api/v2/users/current').set('X-API-TOKEN', 'test').send({
+		const response = await supertest(api).patch('/api/v1/users/current').set('X-API-TOKEN', 'test').send({
 			username: '',
 			password: '',
 			name: '',
 		});
-
-		console.log(response.body);
-		logger.info(response.body);
 
 		expect(response.status).toBe(400);
 		expect(response.body.status).toBe(false);
 	});
 
 	it('should be able to update user name', async () => {
-		const response = await supertest(api).patch('/api/v2/users/current').set('X-API-TOKEN', 'test').send({
+		const response = await supertest(api).patch('/api/v1/users/current').set('X-API-TOKEN', 'test').send({
 			name: 'viery',
 		});
-
-		console.log(response.body);
-		logger.info(response.body);
 
 		expect(response.status).toBe(200);
 		expect(response.body.status).toBe(true);
@@ -157,14 +132,11 @@ describe('PATCH /api/v2/users/current', () => {
 	});
 
 	it('should be able to update user password', async () => {
-		const response = await supertest(api).patch('/api/v2/users/current').set('X-API-TOKEN', 'test').send({
+		const response = await supertest(api).patch('/api/v1/users/current').set('X-API-TOKEN', 'test').send({
 			password: 'updatepassword',
 		});
 
 		const user = await UserTest.get();
-
-		console.log(response.body);
-		logger.info(response.body);
 
 		expect(response.status).toBe(200);
 		expect(response.body.status).toBe(true);
@@ -172,7 +144,7 @@ describe('PATCH /api/v2/users/current', () => {
 	});
 });
 
-describe('DELETE /api/v2/users/current', () => {
+describe('DELETE /api/v1/users/current', () => {
 	beforeEach(async () => {
 		await UserTest.create();
 	});
@@ -182,10 +154,7 @@ describe('DELETE /api/v2/users/current', () => {
 	});
 
 	it('should be able to logout user', async () => {
-		const response = await supertest(api).delete('/api/v2/users/current').set('X-API-TOKEN', 'test');
-
-		console.log(response.body);
-		logger.info(response.body);
+		const response = await supertest(api).delete('/api/v1/users/current').set('X-API-TOKEN', 'test');
 
 		const user = await UserTest.get();
 
@@ -195,10 +164,7 @@ describe('DELETE /api/v2/users/current', () => {
 	});
 
 	it('should be reject to logout user', async () => {
-		const response = await supertest(api).delete('/api/v2/users/current').set('X-API-TOKEN', 'invalid');
-
-		console.log(response.body);
-		logger.info(response.body);
+		const response = await supertest(api).delete('/api/v1/users/current').set('X-API-TOKEN', 'invalid');
 
 		expect(response.status).toBe(401);
 		expect(response.body.status).toBe(false);

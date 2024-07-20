@@ -6,7 +6,8 @@
 	"type": "commonjs",
 	"scripts": {
 		"test": "jest",
-		"migrate": "npx prisma migrate dev"
+		"migrate": "npx prisma migrate dev",
+		"db-restart": "npx prisma migrate reset && prisma migrate dev"
 	},
 	"jest": {
 		"transform": {

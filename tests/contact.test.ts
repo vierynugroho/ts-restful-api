@@ -38,4 +38,23 @@ describe('POST /api/v1/contacts', () => {
 		expect(response.status).toBe(400);
 		expect(response.body.status).toBe(false);
 	});
+
+	it('should be able to get contact', async () => {
+		const contact = await ContactTest.get();
+		const response = await supertest(api).get(`/api/v1/contacts/${contact.id}`).set('X-API-TOKEN', 'test');
+
+		expect(response.status).toBe(200);
+		expect(response.body.data.id).toBeDefined();
+		expect(response.body.data.first_name).toBe(contact.first_name);
+		expect(response.body.data.last_name).toBe(contact.last_name);
+		expect(response.body.data.phone).toBe(contact.phone);
+		expect(response.body.data.email).toBe(contact.email);
+	});
+
+	it('should be reject to get contact', async () => {
+		const contact = await ContactTest.get();
+		const response = await supertest(api).get(`/api/v1/contacts/idTidakAda`).set('X-API-TOKEN', 'test');
+
+		expect(response.status).toBe(404);
+	});
 });

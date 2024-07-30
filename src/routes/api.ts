@@ -13,3 +13,4 @@ apiRouter.delete('/users/current', UserController.logout);
 
 // TODO: Contact
 apiRouter.post('/contacts', ContactController.create);
+apiRouter.get('/contacts/:contactId', ContactController.getOne);

@@ -14,4 +14,15 @@ export class ContactController {
 			next(error);
 		}
 	}
+
+	static async getOne(req: UserRequest, res: Response, next: NextFunction) {
+		try {
+			const contactId = req.params.contactId;
+			const response = await ContactService.getOne(req.user!, contactId);
+
+			res.status(200).json(response);
+		} catch (error) {
+			next(error);
+		}
+	}
 }
